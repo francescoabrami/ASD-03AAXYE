@@ -102,7 +102,7 @@ comando_e leggiComando(char comandi[][STR]) {
     scanf("%s", cmd);
 
     for (int i = 0; i < CMD; i++ ) {
-        if (strcmp(cmd, &comandi[i]) == 0) {
+        if (strcmp(cmd, comandi[i]) == 0) {
             return (comando_e) i;
         }
     }
@@ -156,7 +156,7 @@ void selezionaDati(record_t record, comando_e comando) {
 
             case r_date: {
 
-                if (confrontaDate(record.elenco[i].data, d1) == 1 && confrontaDate(record.elenco[i].data, d2) == -1) {
+                if (confrontaDate(d1, record.elenco[i].data) <= 0 && confrontaDate(record.elenco[i].data, d2) <= 0) {
                     stampaRecord(record, i);
                 }
 
@@ -208,15 +208,15 @@ void selezionaDati(record_t record, comando_e comando) {
 
 int confrontaDate(data_t d1, data_t d2) {
 
-    int dI1, dI2, ris;
+    int dI1, dI2;
     dI1 = dataStrToInt(d1);
     dI2 = dataStrToInt(d2);
 
+    if (dI1 < dI2)
+        return -1;
     if (dI1 > dI2)
-        ris = 1;
-    else
-        ris = -1;
-    return ris;
+        return 1;
+    return 0;
 }
 
 int dataStrToInt(data_t d){
@@ -274,7 +274,7 @@ int main() {
                 break;
 
             default:
-                printf("COMANDO ERRARO! \n ");
+                printf("COMANDO ERRATO! \n ");
                 break;
         }
 
