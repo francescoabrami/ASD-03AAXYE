@@ -4,3 +4,4 @@ project(ASD C)
 set(CMAKE_C_STANDARD 99)
 
 add_subdirectory(LAB/LAB01)
+add_subdirectory(ESEMPI/RICORSIONE)
