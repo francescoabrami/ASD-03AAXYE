@@ -4,4 +4,5 @@ add_executable(INFORMATICA
 
 add_executable(MATEMATICA
         MATEMATICA/matematica.c
+        MATEMATICA/implementazione.c
 )
