@@ -88,11 +88,17 @@ record_t leggiRecord(void) {
 }
 
 void stampaComandi(char comandi[][STR]) {
+
     printf("\nSELEZIONARE UN COMANDO:\n\n");
+
     for (int i = 0; i < CMD; i++ ) {
+
         printf("> %s ", comandi[i] );
+
     }
+
     printf("\n");
+
 }
 
 comando_e leggiComando(char comandi[][STR]) {
@@ -102,8 +108,11 @@ comando_e leggiComando(char comandi[][STR]) {
     scanf("%s", cmd);
 
     for (int i = 0; i < CMD; i++ ) {
+
         if (strcmp(cmd, comandi[i]) == 0) {
+
             return (comando_e) i;
+
         }
     }
 
@@ -119,36 +128,36 @@ void selezionaDati(record_t record, comando_e comando) {
 
     if (comando == r_date) {
 
-        printf("\nINSERIRE LA PRIMA DATA (AAAA/MM/GG):\n DATA > ");
+        printf("\nINSERIRE LA PRIMA DATA (AAAA/MM/GG):\nDATA > ");
         scanf("%d/%d/%d", &d1.aa, &d1.mm, &d1.gg);
-        printf("\nINSERIRE LA SECONDA DATA (AAAA/MM/GG):\n DATA > ");
+        printf("\nINSERIRE LA SECONDA DATA (AAAA/MM/GG):\nDATA > ");
         scanf("%d/%d/%d", &d2.aa, &d2.mm, &d2.gg);
 
     } else if (comando == r_partenza) {
 
-        printf("\nINSERIRE LA FERMATA: \n FERMATA > ");
+        printf("\nINSERIRE LA FERMATA: \nFERMATA > ");
         scanf("%s", &target);
 
     } else if (comando == r_capolinea) {
 
-        printf("\nINSERIRE IL CAPOLINEA: \n CAPOLINEA > ");
+        printf("\nINSERIRE IL CAPOLINEA: \nCAPOLINEA > ");
         scanf("%s", &target);
 
     } else if (comando == r_ritardo) {
 
-        printf("\nINSERIRE LA PRIMA DATA (AAAA/MM/GG):\n DATA > ");
+        printf("\nINSERIRE LA PRIMA DATA (AAAA/MM/GG):\nDATA > ");
         scanf("%d/%d/%d", &d1.aa, &d1.mm, &d1.gg);
-        printf("\nINSERIRE LA SECONDA DATA (AAAA/MM/GG):\n DATA > ");
+        printf("\nINSERIRE LA SECONDA DATA (AAAA/MM/GG):\nDATA > ");
         scanf("%d/%d/%d", &d2.aa, &d2.mm, &d2.gg);
 
     } else if (comando == r_ritardo_tot) {
 
-        printf("\nINSERIRE IL CODICE TRATTA: \n CODICE > ");
+        printf("\nINSERIRE IL CODICE TRATTA: \nCODICE > ");
         scanf("%s", &target);
 
     }
 
-    printf("\nRECORD TROVATI: \n");
+    printf("\nRISULTATO OTTENUTO: \n");
 
     for (int i = 0; i < record.nRecord; i++) {
 
