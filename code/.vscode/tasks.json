@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build C",
+            "type": "shell",
+            "command": "mkdir -p .build && clang -g -O0 -Wall -Wextra ./*.c -o .build/program",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated",
+                "clear": true,
+                "showReuseMessage": false
+            }
+        },
+        {
+            "label": "Run C",
+            "type": "shell",
+            "dependsOn": "Build C",
+            "dependsOrder": "sequence",
+            "command": "printf 'Running: %s\\n\\n' '${fileBasename}' && ./.build/program",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "clear": true,
+                "showReuseMessage": false
+            }
+        }
+    ]
+}

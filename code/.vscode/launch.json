@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug C",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${fileDirname}/.build/program",
+            "args": [],
+            "cwd": "${fileDirname}",
+            "terminal": "integrated",
+            "stopOnEntry": false,
+            "preLaunchTask": "Build C"
+        }
+    ]
+}
