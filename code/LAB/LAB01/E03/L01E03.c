@@ -1,13 +1,14 @@
-#include<stdlib.h>
-#include<string.h>
-#include<stdio.h>
+#include <stdio.h>
+#include <string.h>
 
-#define MAXL 1000
-#define CMD 6
-#define STR 31
+#define MAX_STR_LEN 30
+#define MAX_FILE_LEN 1000
+#define CMD 9
+
 #define FILE_IN "corse.txt"
+#define FILE_OUT "out.txt"
 
-typedef enum {r_date, r_partenza, r_capolinea, r_ritardo, r_ritardo_tot, r_fine} comando_e;
+typedef enum {sStampas, sStampaf, oData, oCodice, oArrivo, oPartenza, rCodice, rStazione, cFine} comando_e;
 typedef enum {false, true} bool;
 
 typedef struct {
@@ -16,7 +17,7 @@ typedef struct {
     int mm;
     int gg;
 
-} data_t;
+} date_t;
 
 typedef struct {
 
@@ -24,224 +25,179 @@ typedef struct {
     int mm;
     int ss;
 
-} ora_t;
+} time_t;
 
 typedef struct {
 
-    char codiceTrattaStr[STR];
-    char partenzaStr[STR];
-    char destinazioneStr[STR];
-    char dataStr[STR];
-    char oraPartenzaStr[STR];
-    char oraArrivoStr[STR];
+    char codiceTrattaStr[MAX_STR_LEN];
+    char partenzaStr[MAX_STR_LEN];
+    char destinazioneStr[MAX_STR_LEN];
+    char dataStr[MAX_STR_LEN];
+    char oraPartenzaStr[MAX_STR_LEN];
+    char oraArrivoStr[MAX_STR_LEN];
     int ritardo;
-    data_t data;
-    ora_t partenza, arrivo;
+    long long epochPartenza;
+    long long epochArrivo;
+    date_t data;
+    time_t partenza, arrivo;
 
 } voce_t;
 
-typedef struct {
+comando_e leggiComando(char comandi[][MAX_STR_LEN]);
 
-    int nRecord;
-    voce_t elenco[MAXL];
+int initData(voce_t data[MAX_FILE_LEN]);
 
-} record_t;
+void stampaComandi(char comandi[][MAX_STR_LEN]);
+void selezionaDati(comando_e comando, voce_t data[MAX_FILE_LEN], int lenData);
+void stampaRecordSchermo(voce_t data[MAX_FILE_LEN], int lenData, bool screen);
+void ordinaRecord(voce_t data[MAX_FILE_LEN], int lenData, comando_e key);
 
-record_t leggiRecord(void);
-comando_e leggiComando(char comandi[][STR]);
-void stampaComandi(char comandi[][STR]);
-void selezionaDati(record_t record, comando_e comando);
-int confrontaDate(data_t d1, data_t d2);
-int dataStrToInt(data_t d);
-void stampaRecord(record_t record, int i);
+void defineEpoch(voce_t * data);
 
+void stampaComandi(char comandi[][MAX_STR_LEN]){
 
-record_t leggiRecord(void) {
+     printf("SELEZIONARE UN COMANDO:\n\n");
 
-    record_t record;
+    for (int i = 0; i < CMD; i++) {
 
-    FILE *fileIn = fopen(FILE_IN, "r");
-
-    if (fileIn == NULL) {
-
-        exit(-1);
-
-    }
-
-    fscanf(fileIn, "%d", &record.nRecord);
-
-    for (int i = 0; i < record.nRecord; i++ ) {
-
-        fscanf(fileIn, "%s %s %s %s %s %s %d\n",
-            record.elenco[i].codiceTrattaStr, record.elenco[i].partenzaStr,
-            record.elenco[i].destinazioneStr, record.elenco[i].dataStr,
-            record.elenco[i].oraPartenzaStr, record.elenco[i].oraArrivoStr, &record.elenco[i].ritardo);
-
-        sscanf(record.elenco[i].dataStr, "%d/%d/%d", &record.elenco[i].data.aa, &record.elenco[i].data.mm, &record.elenco[i].data.gg);
-        sscanf(record.elenco[i].oraPartenzaStr, "%d:%d:%d", &record.elenco[i].partenza.hh, &record.elenco[i].partenza.mm, &record.elenco[i].partenza.ss);
-        sscanf(record.elenco[i].oraArrivoStr, "%d:%d:%d", &record.elenco[i].arrivo.hh, &record.elenco[i].arrivo.mm, &record.elenco[i].arrivo.ss);
-    }
-
-    fclose(fileIn);
-    return record;
-
-}
-
-void stampaComandi(char comandi[][STR]) {
-    printf("\nSELEZIONARE UN COMANDO:\n\n");
-    for (int i = 0; i < CMD; i++ ) {
         printf("> %s ", comandi[i] );
+
     }
-    printf("\n");
+
+    printf("\n\n");
+
+    return;
+
 }
 
-comando_e leggiComando(char comandi[][STR]) {
+comando_e leggiComando(char comandi[][MAX_STR_LEN]) {
 
-    char cmd[STR];
-    printf("\nCOMANDO > ");
-    scanf("%s", cmd);
+    char comandoString[MAX_STR_LEN] = "";
 
-    for (int i = 0; i < CMD; i++ ) {
-        if (strcmp(cmd, &comandi[i]) == 0) {
+    printf("COMANDO > ");
+
+    scanf("%s", comandoString);
+    printf("\n");
+
+    for (int i = 0; i < CMD; i++) {
+
+        if (strcmp(comandoString, comandi[i]) == 0) {
+
             return (comando_e) i;
+
         }
+
     }
 
     return (comando_e) -1;
+    
+}
+
+void defineEpoch(voce_t * data) {
+
+    data->epochPartenza = data->data.aa;
+
+    data->epochPartenza  = data->epochPartenza  * 100 + data->data.mm;
+    data->epochPartenza  = data->epochPartenza  * 100 + data->data.gg;
+
+    data->epochPartenza  = data->epochPartenza  * 100 + data->partenza.hh;
+    data->epochPartenza  = data->epochPartenza  * 100 + data->partenza.mm;
+    data->epochPartenza  = data->epochPartenza  * 100 + data->partenza.ss;
+
+    data->epochArrivo = data->data.aa;
+
+    data->epochArrivo = data->epochArrivo * 100 + data->data.mm;
+    data->epochArrivo = data->epochArrivo  * 100 + data->data.gg;
+
+    data->epochArrivo = data->epochArrivo  * 100 + data->arrivo.hh;
+    data->epochArrivo = data->epochArrivo * 100 + data->arrivo.mm;
+    data->epochArrivo = data->epochArrivo  * 100 + data->arrivo.ss;
+
+    return;
 
 }
 
-void selezionaDati(record_t record, comando_e comando) {
+int initData(voce_t data[MAX_FILE_LEN]) {
 
-    data_t d1, d2;
-    char target[STR];
-    int ritatdo_tot = 0;
+    FILE * fileIn;
 
-    if (comando == r_date) {
+    int lenData;
 
-        printf("\nINSERIRE LA PRIMA DATA (AAAA/MM/GG):\n DATA > ");
-        scanf("%d/%d/%d", &d1.aa, &d1.mm, &d1.gg);
-        printf("\nINSERIRE LA SECONDA DATA (AAAA/MM/GG):\n DATA > ");
-        scanf("%d/%d/%d", &d2.aa, &d2.mm, &d2.gg);
+    fileIn = fopen(FILE_IN, "r");
 
-    } else if (comando == r_partenza) {
+    fscanf(fileIn, "%d", &lenData);
 
-        printf("\nINSERIRE LA FERMATA: \n FERMATA > ");
-        scanf("%s", &target);
+    for (int i = 0; i < lenData; i++) {
 
-    } else if (comando == r_capolinea) {
+        fscanf(fileIn, "%s %s %s %s %s %s %d\n", 
+            data[i].codiceTrattaStr, data[i].partenzaStr,
+            data[i].destinazioneStr, data[i].dataStr,
+            data[i].oraPartenzaStr, data[i].oraArrivoStr, &data[i].ritardo);
 
-        printf("\nINSERIRE IL CAPOLINEA: \n CAPOLINEA > ");
-        scanf("%s", &target);
+        sscanf(data[i].dataStr, "%d/%d/%d", &data[i].data.aa, &data[i].data.mm, &data[i].data.gg);
+        sscanf(data[i].oraPartenzaStr, "%d:%d:%d", &data[i].partenza.hh, &data[i].partenza.mm, &data[i].partenza.ss);
+        sscanf(data[i].oraArrivoStr, "%d:%d:%d", &data[i].arrivo.hh, &data[i].arrivo.mm, &data[i].arrivo.ss);
 
-    } else if (comando == r_ritardo) {
-
-        printf("\nINSERIRE LA PRIMA DATA (AAAA/MM/GG):\n DATA > ");
-        scanf("%d/%d/%d", &d1.aa, &d1.mm, &d1.gg);
-        printf("\nINSERIRE LA SECONDA DATA (AAAA/MM/GG):\n DATA > ");
-        scanf("%d/%d/%d", &d2.aa, &d2.mm, &d2.gg);
-
-    } else if (comando == r_ritardo_tot) {
-
-        printf("\nINSERIRE IL CODICE TRATTA: \n CODICE > ");
-        scanf("%s", &target);
+        defineEpoch(&data[i]);
 
     }
 
-    printf("\nRECORD TROVATI: \n");
+    fclose(fileIn);
 
-    for (int i = 0; i < record.nRecord; i++) {
+    return lenData;
 
-        switch (comando) {
+}
 
-            case r_date: {
+void stampaRecord(voce_t data[MAX_FILE_LEN], int lenData, FILE * file) {
 
-                if (confrontaDate(record.elenco[i].data, d1) == 1 && confrontaDate(record.elenco[i].data, d2) == -1) {
-                    stampaRecord(record, i);
-                }
+    if (file == NULL) {
 
-            } break;
-
-            case r_partenza: {
-
-                if (strcmp(target, record.elenco[i].partenzaStr) == 0) {
-                    stampaRecord(record, i);
-                }
-
-            } break;
-
-            case r_capolinea: {
-
-                if (strcmp(target, record.elenco[i].destinazioneStr) == 0) {
-                    stampaRecord(record, i);
-                }
-
-            } break;
-
-            case r_ritardo: {
-                if (confrontaDate(record.elenco[i].data, d1) == 1 && confrontaDate(record.elenco[i].data, d2) == -1
-                    && record.elenco[i].ritardo > 0) {
-                    stampaRecord(record, i);
-                }
-
-            }  break;
-
-            case r_ritardo_tot: {
-
-                if (!strcmp(target, record.elenco[i].codiceTrattaStr)) {
-                    ritatdo_tot = ritatdo_tot + record.elenco[i].ritardo;
-
-                }
-
-            } break;
-        }
+        file = stdout;
 
     }
+    
+    for (int i = 0; i < lenData; i++) {
 
-    if (comando == r_ritardo_tot) {
-        printf("\nRITARDO TOTALE: %d\n", ritatdo_tot);
+        fprintf(file, "%s %s %s %s %s %s %d \n", data[i].codiceTrattaStr, data[i].partenzaStr,
+        data[i].destinazioneStr, data[i].dataStr, data[i].oraPartenzaStr, data[i].oraArrivoStr, data[i].ritardo);
+
     }
 
     return;
 
 }
 
-int confrontaDate(data_t d1, data_t d2) {
+void ordinaRecord(voce_t data[MAX_FILE_LEN], int lenData, comando_e key) {
 
-    int dI1, dI2, ris;
-    dI1 = dataStrToInt(d1);
-    dI2 = dataStrToInt(d2);
 
-    if (dI1 > dI2)
-        ris = 1;
-    else
-        ris = -1;
-    return ris;
-}
 
-int dataStrToInt(data_t d){
 
-    return d.gg + d.mm * 30 + d.aa * 365;
 
 }
 
-void stampaRecord(record_t record, int i) {
+void selezionaDati(comando_e comando, voce_t data[MAX_FILE_LEN], int lenData) {
 
-    printf("%s %s %s %s %s %s %d \n",record.elenco[i].codiceTrattaStr, record.elenco[i].partenzaStr,
-        record.elenco[i].destinazioneStr, record.elenco[i].dataStr, record.elenco[i].oraPartenzaStr,
-        record.elenco[i].oraArrivoStr, record.elenco[i].ritardo);
+
 
     return;
+
+
 }
 
-int main() {
 
-    bool exit = false;
-    char comandi[][STR] = {"date", "partenza", "capolinea", "ritardo", "ritardo_tot", "fine"};
 
-    record_t record = leggiRecord();
+int main(void) {
+
     comando_e comando;
 
+    bool exit = false;
+
+    char comandi[][MAX_STR_LEN] = {"stampas", "stampaf", "data", "ocodice", "arrivo", "partenza", "rcodice", "stazione", "fine"};
+
+    voce_t data[MAX_FILE_LEN];
+
+    int lenData = initData(data);
+    
     do {
 
         stampaComandi(comandi);
@@ -249,37 +205,59 @@ int main() {
 
         switch (comando) {
 
-            case r_date:
-                selezionaDati(record, comando);
+            case sStampas: 
+
+                stampaRecord(data, lenData, NULL);
+
                 break;
 
-            case r_partenza:
-                selezionaDati(record, comando);
+            case sStampaf:
+
+                FILE * fileOut = fopen(FILE_OUT, "w");
+                stampaRecord(data, lenData, fileOut);
+                fclose(fileOut);
+
                 break;
 
-            case r_capolinea:
-                selezionaDati(record, comando);
+            case oData:
+
+                break;
+            
+            case oArrivo:
+
                 break;
 
-            case r_ritardo:
-                selezionaDati(record, comando);
+            case oPartenza:
+
                 break;
 
-            case r_ritardo_tot:
-                selezionaDati(record, comando);
+            case rCodice:
+
                 break;
 
-            case r_fine:
+
+            case rStazione:
+            
+                break;
+
+            case cFine:
+
                 exit = true;
                 break;
 
-            default:
-                printf("COMANDO ERRARO! \n ");
+            default: 
+
+                printf("COMANDO ERRATO!\n\n");
                 break;
+
         }
 
     } while (!exit);
 
+
     return 0;
 
-}
+}  
+
+
+
