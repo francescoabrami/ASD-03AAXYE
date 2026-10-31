@@ -193,7 +193,7 @@ void stampaRecord(voce_t data[MAX_FILE_LEN], int lenData, FILE * file) {
     
     for (int i = 0; i < lenData; i++) {
 
-        fprintf(file, "%s %s %s %s %s %s %d \n", data[i].codiceTrattaStr, data[i].partenzaStr,
+        fprintf(file, "%-5s %-12s %-15s %s %s %s %d \n", data[i].codiceTrattaStr, data[i].partenzaStr,
         data[i].destinazioneStr, data[i].dataStr, data[i].oraPartenzaStr, data[i].oraArrivoStr, data[i].ritardo);
 
     }
@@ -303,9 +303,9 @@ void ricercaRecord(voce_t * data, int lenData, comando_e key) {
 
                 if( strcmp(ricercaStr, data[i].codiceTrattaStr) == 0) {
 
-                    printf("%s %s %s %s %s %s %d \n", data[i].codiceTrattaStr, data[i].partenzaStr,
-                        data[i].destinazioneStr, data[i].dataStr, data[i].oraPartenzaStr, 
-                        data[i].oraArrivoStr, data[i].ritardo);
+                    printf("%-5s %-12s %-15s %s %s %s %d \n", data[i].codiceTrattaStr, 
+                        data[i].partenzaStr, data[i].destinazioneStr, data[i].dataStr, 
+                        data[i].oraPartenzaStr, data[i].oraArrivoStr, data[i].ritardo);
                 }
 
             }
@@ -368,9 +368,9 @@ int ricercaStazione(voce_t * data, int lenData, char * ricercaStr) {
 
         if (corrispondenza == true) {
 
-            printf("%s %s %s %s %s %s %d \n", data[i].codiceTrattaStr, data[i].partenzaStr,
-                    data[i].destinazioneStr, data[i].dataStr, data[i].oraPartenzaStr, 
-                    data[i].oraArrivoStr, data[i].ritardo);
+            printf("%-5s %-12s %-15s %s %s %s %d \n", data[i].codiceTrattaStr, 
+                data[i].partenzaStr, data[i].destinazioneStr, data[i].dataStr, 
+                data[i].oraPartenzaStr, data[i].oraArrivoStr, data[i].ritardo);
 
         }
         
