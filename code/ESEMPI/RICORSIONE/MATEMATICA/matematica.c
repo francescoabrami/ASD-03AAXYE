@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "matematica.h"
 
@@ -33,7 +34,30 @@ int main(void) {
 
     printf("\n");
 
+    int x, y;
+
+    printf("INSERIRE X: ");
+    scanf("%d", &x);
+
+    printf("INSERIRE Y: ");
+    scanf("%d", &y);
+
+    printf("GCD(%d,%d): %d\n\n", x, y, gcdEuclide(x,y));
+
+
+    printf("INSERIRE X: ");
+    scanf("%d", &x);
+
+    printf("INSERIRE Y: ");
+    scanf("%d", &y);
+
+    printf("GCD(%d,%d): %d\n\n", x, y, gcdLame(x,y));
+
+    int prod1[] = {1, 3, 5, 6}; // 1356;
+    int prod2[] = {2, 4, 1, 0}; // 2410;
+
+    printf("Prodotto: %ld \n \n", prodInt(&prod1, 0, 3, &prod2, 0, 3, 4));
+
     return 0;
 
 }
-

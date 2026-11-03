@@ -7,4 +7,9 @@ unsigned long fibonacci_EX(int n);
 void fattorialeLungo_EX(int n, int numero[], int *numCifre);
 void moltiplica_EX(int numero[],  int *numCifre, int n);
 
+int gcdEuclide(int x, int y);
+int gcdLame(int x, int y);
+
+long prodInt(int * x, int lx, int rx, int * y, int ly, int ry, int n);
+
 #endif
