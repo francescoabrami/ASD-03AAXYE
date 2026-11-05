@@ -6,7 +6,6 @@
 #define MAX_STR_LEN     30
 #define MAX_FILE_LEN    1000
 
-
 #define FILE_IN "corse.txt"
 #define FILE_OUT "out.txt"
 
