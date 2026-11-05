@@ -27,7 +27,7 @@
             "type": "shell",
             "dependsOn": "Build C",
             "dependsOrder": "sequence",
-            "command": "printf 'Running: %s\\n\\n' '${fileBasename}' && ./.build/program",
+            "command": "printf 'Running: %s\\n\\n' '${fileBasename}'; ./.build/program; exit_code=$?; printf '\\n\\n[Process exited with code %d]\\n' \"$exit_code\"; exit \"$exit_code\"",
             "options": {
                 "cwd": "${fileDirname}"
             },
