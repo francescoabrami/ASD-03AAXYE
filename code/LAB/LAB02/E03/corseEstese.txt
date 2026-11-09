@@ -1,0 +1,21 @@
+20
+GTT003 Einaudi Porta_Nuova 2019/01/15 08:15:20 08:32:45 2
+GTT005 Politecnico Porta_Susa 2019/02/20 09:10:00 09:28:30 4
+GTT001 Braccini Piazza_Statuto 2018/07/12 17:45:10 18:02:15 1
+GTT008 Marmolada Cso_Trapani 2019/03/05 12:30:00 12:48:20 3
+GTT002 Porta_Nuova Politecnico 2018/06/18 07:55:35 08:10:00 0
+GTT010 Porta_Susa Braccini 2019/04/22 14:20:15 14:39:50 2
+GTT006 Piazza_Statuto Einaudi 2018/09/25 16:05:00 16:22:10 1
+GTT004 Cso_Trapani Marmolada 2019/05/10 10:40:25 10:59:00 4
+GTT009 Politecnico Porta_Nuova 2020/01/08 06:30:00 06:45:35 3
+GTT007 Braccini Porta_Susa 2018/12/03 19:15:40 19:34:20 2
+GTT002 Einaudi Piazza_Statuto 2019/06/14 11:00:00 11:18:45 0
+GTT005 Porta_Nuova Cso_Trapani 2019/07/21 13:25:10 13:44:55 1
+GTT003 Marmolada Politecnico 2018/08/09 15:50:00 16:08:30 3
+GTT008 Porta_Susa Einaudi 2020/02/17 08:05:15 08:24:00 4
+GTT001 Piazza_Statuto Braccini 2019/09/30 20:10:00 20:27:40 2
+GTT006 Politecnico Cso_Trapani 2018/10/05 07:20:30 07:38:15 1
+GTT010 Einaudi Marmolada 2019/11/11 22:45:00 23:03:50 0
+GTT004 Porta_Nuova Piazza_Statuto 2020/01/25 09:35:20 09:52:10 3
+GTT009 Cso_Trapani Braccini 2019/12/19 18:00:00 18:19:25 4
+GTT007 Politecnico Porta_Susa 2018/05/16 12:15:45 12:33:30 2
