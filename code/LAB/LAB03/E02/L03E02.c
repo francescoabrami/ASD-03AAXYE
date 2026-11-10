@@ -209,7 +209,7 @@ void inserimentoLista(link * anagraficaHead, comando_e cmd) {
             if (fileIn != NULL) {
 
                 fileCorrect = true;
-
+                
             }
 
         } while (!fileCorrect);
