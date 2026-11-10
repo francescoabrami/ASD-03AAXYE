@@ -3,7 +3,6 @@
 
 typedef enum {false, true} bool;
 
-
 void majority(int * vettoreA, int N);
 void leggiVettore(int ** vettoreA, int N);
 
@@ -97,8 +96,6 @@ void majority(int * vettoreA, int N) {
     free(vettoreA);
 
 }
-
-
 
 int main(void) {
 

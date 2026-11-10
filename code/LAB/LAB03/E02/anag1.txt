@@ -1,3 +1,5 @@
 A0001 Mario Rossi 01/02/1990 ViaMarcoPolo Torino 10129
 A0002 Lucia Verdi 07/11/1989 ViaTorino Milano 20123 
+A0010 Francesco Abrami 16/11/2003 ViaSusa Torino 10128
 A0003 Antonio Neri 19/04/1999 GalleriaTermini Roma 00185 
+A0010 Francesco Abrami 16/11/2003 ViaSusa Torino 10128
