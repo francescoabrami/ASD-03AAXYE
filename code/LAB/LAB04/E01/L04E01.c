@@ -89,7 +89,7 @@ void stampa(int N, int *sol) {
     }
 
     printf("}\n");
-    
+
 }
 
 void generaVertexCover(int pos, int N, int E, int *** archi, int * sol) {
@@ -116,7 +116,6 @@ void generaVertexCover(int pos, int N, int E, int *** archi, int * sol) {
     return;
 
 }
-
 
 int main(void) {
 
