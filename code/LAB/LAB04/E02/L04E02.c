@@ -97,6 +97,8 @@ int main(void) {
 
     generaPlayList(&nAmici, &nPlayList, amici, playlist, 0);
 
+    free(amici);
+
     return 0;
 
 }
