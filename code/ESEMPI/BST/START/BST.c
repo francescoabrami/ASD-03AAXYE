@@ -434,10 +434,37 @@ int main (void) {
 
     printf("LIST:\n\n");
     BSTtoList(&root);
+
+    root = BSTInsert(root, 100);
+    root = BSTInsert(root, 150);
+
     BSTstampa(root, 0);
+
+    for (int i = 300; i < 400; i++) {
+
+        root = BSTInsert(root, i);
+
+    }
+
+    for (int i = 600; i < 1000; i++) {
+
+        root = BSTInsert(root, i);
+
+    }
 
     printf("BALANCED BST:\n\n");
     root = ListToBST(&root, BSTcount(root));
+    BSTstampa(root, 0);
+
+    min = BSTmin(root);
+    max = BSTmax(root);
+
+    printf("MAX %d \n\nMIN %d\n\n", max->key, min->key);
+
+    printf("COUNT: %d\n\n", BSTcount(root));
+    printf("HEIGHT: %d\n\n", BSTheight(root));
+
+    BSTtoList(&root);
     BSTstampa(root, 0);
 
     BSTfree(root);
